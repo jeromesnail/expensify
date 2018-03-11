@@ -10,7 +10,7 @@ export default class ExpenseForm extends React.Component {
       description: props.expense ? props.expense.description : '',
       note: props.expense ? props.expense.note : '',
       amount: props.expense ? (props.expense.amount / 100).toString() : '',
-      createdAt: props.expense ? props.expense.createdAt : moment(),
+      createdAt: props.expense ? props.expense.createdAt : moment().valueOf(),
       calendarFocused: false,
       error: ''
     };
@@ -84,7 +84,7 @@ export default class ExpenseForm extends React.Component {
             onChange={this.onAmountChange}
           />
           <SingleDatePicker
-            date={this.state.createdAt}
+            date={moment(this.state.createdAt)}
             onDateChange={this.onDateChange}
             focused={this.state.calendarFocused}
             onFocusChange={this.onFocusChange}
