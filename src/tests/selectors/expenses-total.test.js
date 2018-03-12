@@ -29,6 +29,6 @@ test('should correctly add up multiple expenses even if amount is not a number',
 });
 
 test('should correctly add up multiple expenses even if amount is NaN', () => {
-  const sum = selectExpensesTotal([{ amount: 'this in not a number' }, { amount: 123 }]);
+  const sum = selectExpensesTotal([{ amount: NaN }, { amount: 123 }]);
   expect(sum).toBe(123);
 });
