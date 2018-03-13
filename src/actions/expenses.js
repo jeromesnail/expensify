@@ -14,7 +14,7 @@ export const addExpense = (expense) => (dispatch) => {
       });
     })
     .catch((e) => {
-      console.error('Could not add expense to the data base!', e);      
+      console.error('Could not add expense to the data base!', e);
     });
 };
 
@@ -30,3 +30,21 @@ export const editExpense = (id, updates) => ({
   id,
   updates
 });
+
+// SET_EXPENSES
+export const setExpenses = () => (dispatch) => {
+  return db.ref('expenses').once('value')
+    .then((snapshot) => {
+      const expenses = [];
+      snapshot.forEach((childSnapshot) => {
+        expenses.push({
+          id: childSnapshot.key,
+          ...childSnapshot.val()
+        });
+      });
+      dispatch({
+        type: 'SET_EXPENSES',
+        expenses
+      });
+    }).catch((e) => {console.error(e);});
+};
