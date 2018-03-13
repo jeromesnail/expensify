@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export default [{
+const expenses = [{
   id: '1',
   description: 'Gas Bill',
   note: '',
@@ -19,3 +19,12 @@ export default [{
   amount: 4500,
   createdAt: moment(0).add(4, 'days').valueOf()
 }];
+
+const newExpense = {
+  description: 'test new expense',
+  note: 'this is a new expense without id',
+  amount: 36900,
+  createdAt: moment(0).add(56, 'years').valueOf()
+};
+
+export { expenses as default, newExpense};
