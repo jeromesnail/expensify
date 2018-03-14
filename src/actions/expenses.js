@@ -2,7 +2,6 @@ import db from '../firebase/firebase';
 
 //ADD_EXPENSE
 export const addExpense = (expense) => (dispatch) => {
-
   return db.ref('expenses').push(expense)  // adding expense to the database
     .then((ref) => {
       dispatch({                    // dispatching to the store
@@ -13,16 +12,24 @@ export const addExpense = (expense) => (dispatch) => {
         }
       });
     })
-    .catch((e) => {
-      console.error('Could not add expense to the data base!', e);
-    });
+    .catch((e) => { console.error(e); });
 };
 
 // REMOVE_EXPENSE
-export const removeExpense = ({ id } = {}) => ({
+export const proutremoveExpense = (id) => ({
   type: 'REMOVE_EXPENSE',
   id
 });
+
+export const removeExpense = (id) => (dispatch) => {
+  return db.ref(`expenses/${id}`).remove()
+    .then(() => {
+      dispatch({
+        type: 'REMOVE_EXPENSE',
+        id
+      });
+    }).catch((e) => { console.error(e); });
+}
 
 // EDIT_EXPENSE
 export const editExpense = (id, updates) => ({
@@ -46,5 +53,5 @@ export const setExpenses = () => (dispatch) => {
         type: 'SET_EXPENSES',
         expenses
       });
-    }).catch((e) => {console.error(e);});
+    }).catch((e) => { console.error(e); });
 };

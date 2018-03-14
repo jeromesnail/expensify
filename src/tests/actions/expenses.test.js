@@ -15,14 +15,6 @@ beforeEach((done) => {
   db.ref('expenses').set(expensesData).then(() => done());
 });
 
-test('shoul setup remove expense action object', () => {
-  const action = removeExpense({ id: '123abc' });
-  expect(action).toEqual({
-    type: 'REMOVE_EXPENSE',
-    id: '123abc'
-  })
-});
-
 test('should setup edit expense action object', () => {
   const action = editExpense('az125r', { description: 'lol' });
   expect(action).toEqual({
@@ -50,7 +42,20 @@ test('should add expense to database and store', (done) => {
   }).catch((e) => { console.error(e); });
 });
 
-test('should fetch the expenses from firebase', (done) => {
+test('should remove expense from database and store', (done) => {
+  const store = createMockStore({});
+  const id = '2';
+  store.dispatch(removeExpense(id)).then(() => {
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({ type: 'REMOVE_EXPENSE', id });
+    return db.ref(`expenses/${id}`).once('value');
+  }).then((snapshot) => {
+    expect(snapshot.val()).toEqual(null);
+    done();
+  }).catch((e) => { console.error(e); });
+});
+
+test('should fetch the expenses from database', (done) => {
   const store = createMockStore({});
   store.dispatch(setExpenses()).then(() => {
     const actions = store.getActions();
