@@ -27,12 +27,6 @@ export const removeExpense = (id) => (dispatch) => {
 }
 
 // EDIT_EXPENSE
-export const prouteditExpense = (id, updates) => ({
-  type: 'EDIT_EXPENSE',
-  id,
-  updates
-});
-
 export const editExpense = (id, updates) => (dispatch) => {
   return db.ref(`expenses/${id}`).update(updates)
     .then(() => {
