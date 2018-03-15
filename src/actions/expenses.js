@@ -1,4 +1,5 @@
 import db from '../firebase/firebase';
+import { history } from '../routers/AppRouter';
 
 //ADD_EXPENSE
 export const addExpense = (expense) => (dispatch, getState) => {
@@ -12,8 +13,8 @@ export const addExpense = (expense) => (dispatch, getState) => {
           ...expense
         }
       });
-    })
-    .catch((e) => { console.error(e); });
+      history.push('/');
+    }).catch((e) => { console.error(e); });
 };
 
 // REMOVE_EXPENSE
@@ -25,6 +26,7 @@ export const removeExpense = (id) => (dispatch, getState) => {
         type: 'REMOVE_EXPENSE',
         id
       });
+      history.push('/');
     }).catch((e) => { console.error(e); });
 }
 
@@ -38,6 +40,7 @@ export const editExpense = (id, updates) => (dispatch, getState) => {
         id,
         updates
       });
+      history.push('/');
     }).catch((e) => { console.error(e); });
 }
 
